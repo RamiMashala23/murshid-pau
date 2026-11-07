@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="system" data-motion="on">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="مُرشد، دليل للأسئلة الأكاديمية عن التسجيل والخطط الدراسية في جامعة فلسطين الأهلية.">
+  <title>مُرشد | جامعة فلسطين الأهلية</title>
+  <link rel="icon" href="assets/pau-logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    try {
+      const preferences = JSON.parse(localStorage.getItem('murshid-appearance') || '{}');
+      if (['light', 'dark', 'system'].includes(preferences.theme)) {
+        document.documentElement.dataset.theme = preferences.theme;
+      }
+      if (preferences.motion === false) document.documentElement.dataset.motion = 'off';
+    } catch {
+      // The default appearance also works without local storage.
+    }
+  </script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="icon-library">
+    <symbol id="icon-settings" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="10" cy="18" r="2"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M20 12H5m6-6-6 6 6 6"/></symbol>
+    <symbol id="icon-up-left" viewBox="0 0 24 24"><path d="M17 17 7 7m0 8V7h8"/></symbol>
+    <symbol id="icon-file" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H6V3h1Zm7 0v5h4M9 12h6m-6 4h6"/></symbol>
+    <symbol id="icon-book" viewBox="0 0 24 24"><path d="M12 6v15M3 4h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5v14h-5a4 4 0 0 0-4 3 4 4 0 0 0-4-3H3z"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M20.8 14.6A8.9 8.9 0 0 1 9.4 3.2a9 9 0 1 0 11.4 11.4Z"/></symbol>
+    <symbol id="icon-system" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="shell header-row">
+      <a class="brand" href="./" aria-label="مُرشد، الصفحة الرئيسية">
+        <span class="brand-mark"><img src="assets/pau-logo.png" width="44" height="44" alt="شعار جامعة فلسطين الأهلية"></span>
+        <span class="brand-copy">
+          <span class="university">جامعة فلسطين الأهلية</span>
+          <span class="brand-name">مُرشد <span aria-hidden="true">·</span> المرشد الأكاديمي</span>
+        </span>
+      </a>
+      <button class="button-quiet settings-button" type="button" id="open-settings" aria-haspopup="dialog">
+        <svg class="icon"><use href="#icon-settings"/></svg><span>الإعدادات</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main" class="workspace">
+    <div class="workspace-inner">
+      <div class="intro-slot">
+        <section class="intro" aria-labelledby="page-title">
+          <span class="eyebrow">المرشد الأكاديمي</span>
+          <h1 id="page-title">شو حاب تعرف؟</h1>
+          <p>اسأل عن التسجيل، الخطط الدراسية، والإجراءات الجامعية.</p>
+        </section>
+      </div>
+
+      <section class="question-area" aria-label="اسأل المرشد الأكاديمي">
+        <div id="active-heading" class="active-heading" hidden>
+          <span>سؤالك</span>
+          <button id="new-question" class="button-quiet" type="button">
+            <svg class="icon"><use href="#icon-plus"/></svg>سؤال جديد
+          </button>
+        </div>
+        <form id="ask-form" class="composer">
+          <label class="sr-only" for="question">اكتب سؤالك</label>
+          <div class="composer-row">
+            <input id="question" name="question" type="text" enterkeyhint="send" placeholder="مثلاً، كيف بقدّم طلب سحب مساق؟"
+              autocomplete="off" maxlength="600" required role="combobox" aria-autocomplete="list"
+              aria-expanded="false" aria-controls="autocomplete">
+            <button id="ask-button" type="submit" class="button-primary">
+              <span>اسأل</span><svg class="icon"><use href="#icon-arrow"/></svg>
+            </button>
+          </div>
+          <div id="completion" class="completion" hidden>
+            <div class="completion-heading"><span>اقتراحات لإكمال سؤالك</span><span class="completion-key"><kbd>Tab</kbd> للإكمال</span></div>
+            <ul id="autocomplete" role="listbox" aria-label="اقتراحات لإكمال السؤال"></ul>
+          </div>
+        </form>
+        <div id="question-suggestions" class="starter">
+          <h2>أسئلة شائعة</h2>
+          <div class="starter-list" id="starter-list"></div>
+        </div>
+        <p id="interaction-status" class="sr-only" role="status"></p>
+        <section id="result" class="result-card" aria-labelledby="result-title" aria-live="polite" hidden>
+          <header class="result-header">
+            <h2 id="result-title">الجواب</h2><span id="answer-mode" class="answer-mode" hidden>مثال للعرض</span>
+          </header>
+          <div id="loading" class="loading" hidden aria-hidden="true"><span></span><span></span><span></span></div>
+          <div id="answer" class="answer-text" dir="auto"></div>
+          <div id="source-section" class="sources" hidden>
+            <h3>المصادر</h3>
+            <ul id="sources"></ul>
+          </div>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-row">
+      <span>مُرشد · مشروع هاكاثون</span>
+      <nav aria-label="روابط الجامعة">
+        <a href="https://www.paluniv.edu.ps/" target="_blank" rel="noopener noreferrer">موقع الجامعة <svg class="icon"><use href="#icon-up-left"/></svg></a>
+        <a href="https://portal.paluniv.edu.ps/" target="_blank" rel="noopener noreferrer">البوابة الأكاديمية <svg class="icon"><use href="#icon-up-left"/></svg></a>
+      </nav>
+    </div>
+  </footer>
+
+  <dialog id="settings" aria-labelledby="settings-title">
+    <div class="dialog-header">
+      <div><h2 id="settings-title">الإعدادات</h2><p>خصّص طريقة عرض الموقع على جهازك.</p></div>
+      <button class="button-quiet icon-button" id="close-settings" type="button" aria-label="إغلاق الإعدادات">
+        <svg class="icon"><use href="#icon-close"/></svg>
+      </button>
+    </div>
+    <fieldset class="themes">
+      <legend>المظهر</legend>
+      <label><input type="radio" name="theme" value="light"><span><svg class="icon"><use href="#icon-sun"/></svg>فاتح</span></label>
+      <label><input type="radio" name="theme" value="dark"><span><svg class="icon"><use href="#icon-moon"/></svg>داكن</span></label>
+      <label><input type="radio" name="theme" value="system"><span><svg class="icon"><use href="#icon-system"/></svg>حسب الجهاز</span></label>
+    </fieldset>
+    <label class="motion-control" for="motion">
+      <span><strong>الحركة</strong><small>انتقالات خفيفة عند السؤال وظهور الجواب.</small></span>
+      <input id="motion" type="checkbox" role="switch" checked>
+    </label>
+  </dialog>
+</body>
+</html>
